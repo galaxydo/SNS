@@ -1,82 +1,17 @@
-# You should make a copy of this file, name it sns_init.yaml, and edit it to
-# suit your needs.
-#
-# All principal IDs should almost certainly be changed.
-#
-# In this file, 1 year is nominally defined to be 365.25 days.
-#
-# This gets passed to `sns propose`. See propose_sns.sh.
-#
-# This follows the second configuration file format developed for the `sns`
-# CLI. The first format will be supported for a time, but this format will
-# eventually become the standard format.
-# ------------------------------------------------------------------------------
-# UNITS
-#
-# This SNS configuration file version allows specifying the various
-# fields with units that make configuration easier. For instance,
-# in the previous version, all fields relating to token values
-# had to be specified in e8s (fractions of 10E-8 of a governance token).
-# In this version, similar fields can be specified in whole tokens,
-# tokens with decimals, or e8s. Below is more information on the type
-# of units that can be used.
-#
-# For fields that represent token values (such as `transaction_fee`
-# or `rejection_fee`), devs can specify decimal strings ending in
-# "tokens" (plural), decimal strings ending in "token" (singular),
-# or integer strings (base 10) ending in "e8s". In the case of
-# "tokens" strings, the maximum number of digits after the (optional)
-# decimal point is 8. The "_" character may be sprinkled throughout.
-# Whitespace around number is insignificant. E.g. " 42 tokens" is
-# equivalent to "42tokens".
-#
-# For fields that represent duration values (such as `initial_voting_period`
-# or `minimum_dissolve_delay`), devs can specify durations as a concatenation
-# of time spans. Where each time span is an integer number and a suffix.
-# Supported suffixes:
-#  - seconds, second, sec, s
-#  - minutes, minute, min, m
-#  - hours, hour, hr, h
-#  - days, day, d
-#  - weeks, week, w
-#  - months, month, M -- defined as 30.44 days
-#  - years, year, y -- defined as 365.25 days
-#
-# For example, "1w 2d 3h" gets parsed as
-#
-# 1 week + 2 days + 3 hours
-#    =
-# (1 * (7 * 24 * 60 * 60) + 2 * 24 * 60 * 60 + 3 * (60 * 60)) seconds
-#
-# For fields that represent percentage values (such as `bonus`), devs specify
-# the value as an integer with a trailing percent sign ('%'). For example,
-# `10%`.
-#
-# For fields that represent time of day (such as `start_time`), devs specify
-# the value as a string in form "hh::mm UTC". Where hh is hour, and mm is minute.
-# Only the UTC timezone is currently supported.
-# ------------------------------------------------------------------------------
-
-# Name of the SNS project. This may differ from the name of the associated
-# token. Must be a string of max length = 255.
+# SNS configuration file of Galaxy.DO
 name: Galaxy
 
-# Description of the SNS project.
-# Must be a string of max length = 2,000.
 description: >
         Your decentralized workspace. Create your knowledge on Galaxy's advanced canvas, store it on-chain and sell on marketplace. 
 
 # This is currently a placeholder field and must be left empty for now.
 Principals: []
 
-# Path to the SNS Project logo on the local filesystem. The path is relative
-# to the configuration file's location, unless an absolute path is given.
-# Must have less than 341,334 bytes. The only supported format is PNG.
+# Path to the SNS Project logo on the local filesystem. The path is ../assets/logo.png
 logo: Galaxy_logo.png
 
 # URL to the dapp controlled by the SNS project.
-# Must be a string from 10 to 512 bytes.
-url: https://forum.dfinity.org/thread-where-this-sns-is-discussed
+url: http://galaxydoapp.xyz
 
 # Metadata for the NNS proposal required to create the SNS. This data will be
 # shown only in the NNS proposal.
@@ -84,46 +19,65 @@ NnsProposal:
     # The title of the NNS proposal. Must be a string of 4 to 256 bytes.
     title: "NNS Proposal to create an SNS named 'Galaxy'"
 
-    # The HTTPS address of additional content required to evaluate the NNS
-    # proposal.
+    # The HTTPS address of additional content required to evaluate the NNS proposal.
     url: "https://whitepaper.galaxydo.xyz"
 
     # The description of the proposal. Must be a string of 10 to 2,000 bytes.
     summary: >
         Proposal to create an SNS for the project Galaxy.
-        The SNS will be initialized with the following neurons:
-        ...
+        A Decentralized Internet requires a Decentralized Knowledge. Launching as an SNS allows Galaxy to embody its core principles of data sovereignty and user empowerment, ensuring that the community retains control over important aspects of the platform.
+
+        Proposed Token Distribution
+        Total token supply -  100 Million
+        Reserved for SNS treasury -  56.00% 
+        To be distributed by the decentralisation sale, including NF contribution -  26.00%
+        Allocated to the founding team which vest over 48  months -  10.00%
+        Allocated to seed investors which vest over 24 months -  7.00%
+        Allocated to airdrops which vest over 12 months  -  1.00%
+
+        ## SNS parameters
+
+         STARS tokens for swap: 26 000 000 STARS
+         Min Participants: 100
+         Min ICP to raise: 100 000 ICP - NF estimated contribution (min raise): 77 012 ICP
+         Max ICP to raise: 200 000 ICP - NF estimated contribution (max raise): 83 333 ICP
+         Min number of tokens per contributor: 5 ICP
+         Max number of tokens per contributor: 100 000 ICP
+         Duration: 14 days
+
+        ## Learn more
+         
+         [Whitepaper]  https://whitepaper.galaxydo.xyz
+         [Github]      https://github.com/galaxydo
+         [Twitter/X]   https://x.com/galaxydoxyz
+         [Discord]     https://discord.gg/9y8Y5JbWCf
+         [Open Chat]   https://oc.app/community/3dunn-zyaaa-aaaar-bgywa-cai
+
 
 # If the SNS launch attempt fails, control over the dapp canister(s) is given to
 # these principals. In most use cases, this is chosen to be the original set of
 # controller(s) of the dapp. Must be a list of PrincipalIds.
 fallback_controller_principals:
-    # For the actual SNS launch, you should replace this with one or more
-    # principals of your intended fallback controllers.
-    #
-    # For testing, propose_sns.sh will fill this in automatically.
-    - YOUR_PRINCIPAL_ID
+    - zf37h-sixm5-pyl7e-v5vi2-xc2ew-swjjv-mazio-b5j4d-jfdzw-esy56-wqe
 
-# The list of dapp canister(s) that will be decentralized if the
-# decentralization swap succeeds. These are defined in the form of canister IDs,
-# for example, `bnz7o-iuaaa-aaaaa-qaaaa-cai`.  For a successful SNS launch,
-# these dapp canister(s) must be co-controlled by the NNS Root canister
-# (`r7inp-6aaaa-aaaaa-aaabq-cai`) at latest at the time when the NNS proposal to
-# create an SNS is adopted (usually this is required even earlier, e.g., to
-# convince NNS neurons to vote in favor of your proposal).
+# The list of dapp canister(s) that will be decentralized if the decentralization swap succeeds. 
 dapp_canisters:
-    # For the actual SNS launch, you should replace this with one or more
-    # IDs of the canisters comprising your to-be-decentralized dapp.
-    #
-    # For testing, propose_sns.sh will fill this in automatically.
-    - YOUR_CANISTER_ID
+    # Galaxy KMS app (Whiteboard web-app) Frontend Canister 
+    - 3rkjs-6qaaa-aaaag-qjx3a-cai
+    # Galaxy KMS app Backend Canister
+    - lc7ac-naaaa-aaaak-qiipq-cai
+    # PKM app (User's uploads) Frontend Canister
+    - yfplg-oyaaa-aaaal-qja3a-cai
+    # PKM app Backend Canister
+    - ymma2-yqaaa-aaaal-qja2q-cai
+    
 
 # Configuration of SNS tokens in the SNS Ledger canister deployed as part
 # of the SNS.
 Token:
     # The name of the token issued by the SNS ledger.
     # Must be a string of 4 to 255 bytes without leading or trailing spaces.
-    name: Galaxy Stars Token
+    name: Galaxy_Stars
 
     # The symbol of the token issued by the SNS Ledger.
     # Must be a string of 3 to 10 bytes without leading or trailing spaces.
@@ -132,9 +86,7 @@ Token:
     # SNS ledger transaction fee.
     transaction_fee: 10_000 e8s
 
-    # Path to the SNS token logo on your local filesystem. The path is relative
-    # to the configuration file location, unless an absolute path is given.
-    # Must have less than 341,334 bytes. The only supported format is PNG.
+    # Path to the SNS token logo on your local filesystem.
     logo: Stars_logo.png
 
 # Configures SNS proposal-related fields. These fields define the initial values
@@ -145,32 +97,11 @@ Proposals:
     # holders. This field is specified as a token. For example: "1 token".
     rejection_fee: 10 tokens
 
-    # The initial voting period of an SNS proposal. A proposal's voting period
-    # may be increased during its lifecycle due to the wait-for-quiet algorithm
-    # (see details below). This field is specified as a duration. For example
-    # "4 days".
+    # The initial voting period of an SNS proposal.
     initial_voting_period: 4 days
 
     # The wait-for-quiet algorithm extends the voting period of a proposal when
     # there is a flip in the majority vote during the proposal's voting period.
-    #
-    # Without this, there could be an incentive to vote right at the end of a
-    # proposal's voting period, in order to reduce the chance that people will
-    # see and have time to react to that.
-    #
-    # If this value is set to 1 day, then a change in the majority vote at the
-    # end of a proposal's original voting period results in an extension of the
-    # voting period by an additional day. Another change at the end of the
-    # extended period will cause the voting period to be extended by another
-    # half-day, etc.
-    #
-    # The total extension to the voting period will never be more than twice
-    # this value.
-    #
-    # For more information, please refer to
-    # https://wiki.internetcomputer.org/wiki/Network_Nervous_System#Proposal_decision_and_wait-for-quiet
-    #
-    # This field is specified as a duration. For example: "1 day".
     maximum_wait_for_quiet_deadline_extension: 1 day
 
 # Configuration of SNS voting.
@@ -181,21 +112,11 @@ Neurons:
 
 # Configuration of SNS voting.
 Voting:
-    # The minimum dissolve delay a neuron must have to be able to cast votes on
-    # proposals.
-    #
-    # Dissolve delay incentivizes neurons to vote in the long-term interest of
-    # an SNS, as they are rewarded for longer-term commitment to that SNS.
-    #
-    # Users cannot access the SNS tokens used to stake neurons (until the neuron
-    # is dissolved). This field is specified as a duration. For example: "6 months".
+    # The minimum dissolve delay a neuron must have to be able to cast votes on proposals.
     minimum_dissolve_delay: 1 month
 
     # Configuration of voting power bonuses that are applied to neurons to
-    # incentivize alignment with the best interest of the DAO. Note, these
-    # bonuses multiply each other, so the increase in voting power due to
-    # the dissolve delay bonus is used in the equation to increase voting
-    # power for the age bonus.
+    # incentivize alignment with the best interest of the DAO.
     MaximumVotingPowerBonuses:
         # Users with a higher dissolve delay are incentivized to take the
         # long-term interests of the SNS into consideration when voting. To
@@ -220,7 +141,7 @@ Voting:
             # This parameter sets the maximum dissolve delay a neuron can have.
             # When reached, the maximum dissolve delay bonus will be applied.
             # This field is specified as a duration. For example: "8 years".
-            duration: 1 years
+            duration: 12 months
             # If a neuron's dissolve delay is `duration`, its voting power will
             # be increased by the dissolve delay `bonus` amount. 
             # This field is specified as a percentage. For instance, 
@@ -320,33 +241,72 @@ Distribution:
     # decentralization swap is completed. Note that `vesting_period` starts
     # right after the SNS creation and thus includes the pre-initialization mode
     # period.
-    #
-    # For example:
-    #  - principal: hpikg-6exdt-jn33w-ndty3-fc7jc-tl2lr-buih3-cs3y7-tftkp-sfp62-gqe
-    #    stake: 1_000 tokens
-    #    memo: 0
-    #    dissolve_delay: 2 years
-    #    vesting_period: 4 years
+
     Neurons:
         # For the actual SNS launch, you should replace this with one or more
         # principals of your intended genesis neurons.
         #
-        # For testing, propose_sns.sh will fill this in automatically.
-        - principal: xxxxx-yyyyy-zzzzz  # Devs distribution (mockup wallet, just x calcs) 
-          stake: 10_000_000 tokens
+        # For the team, vesting over 4 years:
+        - principal: zf37h-sixm5-pyl7e-v5vi2-xc2ew-swjjv-mazio-b5j4d-jfdzw-esy56-wqe  # Devs distribution 
+          stake: 2_000_000 tokens
           memo: 0
           dissolve_delay: 1 month
-          vesting_period: 2 years  
-        - principal: xxxxx-yyyyy-zzzzz  # Seed distribution + Airdrop (mockup wallet, just x calcs) 
-          stake: 7_000_000 tokens
+          vesting_period: 0 year  
+        - principal: zf37h-sixm5-pyl7e-v5vi2-xc2ew-swjjv-mazio-b5j4d-jfdzw-esy56-wqe  # Devs distribution 
+          stake: 2_000_000 tokens
+          memo: 1
+          dissolve_delay: 1 month
+          vesting_period: 1 year
+        - principal: zf37h-sixm5-pyl7e-v5vi2-xc2ew-swjjv-mazio-b5j4d-jfdzw-esy56-wqe  # Devs distribution 
+          stake: 2_000_000 tokens
+          memo: 2
+          dissolve_delay: 1 month
+          vesting_period: 2 years
+        - principal: zf37h-sixm5-pyl7e-v5vi2-xc2ew-swjjv-mazio-b5j4d-jfdzw-esy56-wqe  # Devs distribution 
+          stake: 2_000_000 tokens
+          memo: 3
+          dissolve_delay: 1 month
+          vesting_period: 3 years
+        - principal: zf37h-sixm5-pyl7e-v5vi2-xc2ew-swjjv-mazio-b5j4d-jfdzw-esy56-wqe  # Devs distribution 
+          stake: 2_000_000 tokens
+          memo: 4
+          dissolve_delay: 1 month
+          vesting_period: 4 years
+        #
+        # For seed funders, vesting over 2 years:
+        - principal: xxxxx-yyyyy-zzzzz  # Seed distribution (mockup wallet) 
+          stake: 1_750_000 tokens
           memo: 0
           dissolve_delay: 1 month
-          vesting_period: 1 years
-        - principal: xxxxx-yyyyy-zzzzz  # Airdrop distribution (mockup wallet, just x calcs) 
+          vesting_period: 6 months
+        - principal: xxxxx-yyyyy-zzzzz  # Seed distribution (mockup wallet) 
+          stake: 1_750_000 tokens
+          memo: 1
+          dissolve_delay: 1 month
+          vesting_period: 12 months
+        - principal: xxxxx-yyyyy-zzzzz  # Seed distribution (mockup wallet) 
+          stake: 1_750_000 tokens
+          memo: 2
+          dissolve_delay: 1 month
+          vesting_period: 18 months
+        - principal: xxxxx-yyyyy-zzzzz  # Seed distribution (mockup wallet) 
+          stake: 1_750_000 tokens
+          memo: 3
+          dissolve_delay: 1 month
+          vesting_period: 24 months
+        #
+        # For the airdrop, vesting over 1 year:
+        - principal: xxxxx-yyyyy-zzzzz  # Airdrop distribution (mockup wallet) 
           stake: 1_000_000 tokens
           memo: 0
           dissolve_delay: 1 month
-          vesting_period: 1 years
+          vesting_period: 6 months
+        - principal: xxxxx-yyyyy-zzzzz  # Airdrop distribution (mockup wallet) 
+          stake: 1_000_000 tokens
+          memo: 0
+          dissolve_delay: 1 month
+          vesting_period: 12 months
+
     # The initial SNS token balances of the various canisters of the SNS.
     InitialBalances:
         # The initial SNS token balance of the SNS Governance canister is known
@@ -360,8 +320,9 @@ Distribution:
         swap: 26_000_000 tokens
 
     # Checksum of the total number of tokens distributed in this section.
-    #     18 million    (dev neuron)
-    #     52 million    (governance)
+    #     10 million    (dev neuron)
+    # +   8 million     (seed investor + airdrop)
+    # +   56 million    (governance)
     # +   26 million    (swap)
     # --------------
     total: 100_000_000 tokens
@@ -376,7 +337,7 @@ Swap:
     # to the deadline or the maximum target being reached, and if there are less
     # than `minimum_participants` (here, only direct participants are counted),
     # the swap will be committed.
-    minimum_participants: 50
+    minimum_participants: 100
 
     # Minimum amount of ICP from direct participants. This amount is required for
     # the swap to succeed. If this amount is not achieved, the swap will be
@@ -400,16 +361,16 @@ Swap:
     # The maximum amount of ICP that each participant may contribute
     # to participate. This field is specified as a token. For instance,
     # "1 token".
-    maximum_participant_icp: 75_000 tokens
+    maximum_participant_icp: 100_000 tokens
 
     # The text that swap participants must confirm before they may participate
     # in the swap.
     #
     # This field is optional. If set, must be within 1 to 1,000 characters and
     # at most 8,000 bytes.
-    # confirmation_text: >
-    #     I confirm my understanding of the responsibilities and risks
-    #     associated with participating in this token swap.
+    confirmation_text: >
+         I confirm my understanding of the responsibilities and risks
+         associated with participating in this token swap.
 
     # A list of countries from which swap participation should not be allowed.
     #
@@ -418,8 +379,13 @@ Swap:
     #
     # Each list element must be an ISO 3166-1 alpha-2 country code.
     restricted_countries:
-        - AQ  # Antarctica
-        - US
+      - US # USA
+      - CU # CUBA
+      - KP # NORTH KOREA 
+      - IR # IRAN
+      - RU # RUSSIA 
+      - SY # SYRIA 
+
 
     # Configuration of the vesting schedule of the neuron basket, i.e., the SNS
     # neurons that a participants will receive from a successful
@@ -468,7 +434,7 @@ Swap:
     #   the CreateServiceNervousSystem proposal is executed. This facilitates
     #   testing in an accelerated manner.
     #
-    # start_time: 23:30 UTC  # Intentionally commented out for testing.
+    start_time: 12:00 UTC  # Start Time
 
     # The duration of the decentralization swap. When `start_time` is calculated
     # during CreateServiceNervousSystem proposal execution, this `duration` will
